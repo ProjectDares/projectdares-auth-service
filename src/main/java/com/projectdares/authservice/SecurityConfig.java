@@ -14,9 +14,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                    .anyRequest()
+                    .authenticated()
                 .and()
-                .oauth2Login()
-                .successHandler(authSuccessHandler);
+                    .oauth2Login()
+                    .successHandler(authSuccessHandler)
+                .and()
+                    .logout()
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessUrl("/login")
+                    .permitAll()
+                .and().csrf().disable();
     }
 }
